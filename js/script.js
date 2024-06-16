@@ -59,6 +59,19 @@ const upadteTodo = (text) => {
     }
   });
 };
+
+const getSearchTodos = (search) => {
+  const todos = document.querySelectorAll(".todo");
+
+  todos.forEach((todo) => {
+    let todoTitle = todo.querySelector("h3").innerText.toLowerCase();
+    todo.style.display = "flex";
+    const normalizedSearch = search.toLowerCase();
+    if (!todoTitle.includes(normalizedSearch)) {
+      todo.style.display = "None";
+    }
+  });
+};
 // Eventos
 
 todoForm.addEventListener("submit", (e) => {
@@ -112,4 +125,18 @@ editForm.addEventListener("submit", (e) => {
   }
 
   toggleForms();
+});
+
+searchInput.addEventListener("keyup", (e) => {
+  const search = e.target.value;
+
+  getSearchTodos(search);
+});
+
+eraseBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  searchInput.value = "";
+
+  searchInput.dispatchEvent(new Event("keyup"));
 });
