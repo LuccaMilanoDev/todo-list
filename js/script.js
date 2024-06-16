@@ -72,6 +72,34 @@ const getSearchTodos = (search) => {
     }
   });
 };
+
+const filterTodos = (filterValue) => {
+  const todos = document.querySelectorAll(".todo");
+
+  switch (filterValue) {
+    case "all":
+      todos.forEach((todo) => (todo.style.display = "flex"));
+      break;
+    case "done":
+      todos.forEach((todo) => {
+        if (todo.classList.contains("done")) {
+          todo.style.display = "flex";
+        } else {
+          todo.style.display = "none";
+        }
+      });
+      break;
+    case "todo":
+      todos.forEach((todo) => {
+        if (!todo.classList.contains("done")) {
+          todo.style.display = "flex";
+        } else {
+          todo.style.display = "none";
+        }
+      });
+      break;
+  }
+};
 // Eventos
 
 todoForm.addEventListener("submit", (e) => {
@@ -139,4 +167,10 @@ eraseBtn.addEventListener("click", (e) => {
   searchInput.value = "";
 
   searchInput.dispatchEvent(new Event("keyup"));
+});
+
+filterBtn.addEventListener("change", (e) => {
+  const filterValue = e.target.value;
+
+  filterTodos(filterValue);
 });
